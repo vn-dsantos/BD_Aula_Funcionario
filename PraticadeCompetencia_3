@@ -1,0 +1,54 @@
+ 
+use master
+Create database PraticadeCompetencia_3
+go
+ 
+Create table Estado
+(
+	CodEstado int identity primary key,
+	Nome varchar(120) not null,
+	Sigla varchar(2) not null
+)
+ 
+Create table Cidade
+(
+	CodEstado int identity primary key,
+	Nome varchar(120) not null,
+	Estado int not null References Estado(CodEstado)
+)
+ 
+Create table Funcionário
+(
+	CodFuncionário int identity primary key,
+	DatadeNascimento date not null,
+	Sexo char (1) check(Sexo = 'M' or Sexo = 'F' or Sexo = '0') not null,
+  	Nome varchar(120) not nul,
+	Cidade int not null References Cidade(CodCidade)
+)
+ 
+Create table Dependete
+(
+	CodDependente int identity primary key,
+	Nome varchar(120) not null, 
+	DataNascimento date not null,
+	Sexo char (1) check(Sexo = 'M' or Sexo = 'F' or Sexo = '0') not null,
+	Tipo varchar (2) not null,
+	Funcionário int not null References Funcionário(CodFuncionário)
+)
+ 
+Create table Cargo
+(
+	CodCargo int identity primary key,
+	Salário money not null,
+	Nome varchar(120) not null
+)
+ 
+Create Table FuncionarioCargo
+(
+	DataInício date not null,
+	DataFim date not null,
+	Cargo int not null References Cargo(codCargo),
+	Funcionário int not null References Funcionário(CodFuncionário),
+	CodFuncionárioCargo Primary key clustered (CodFuncionário, CodCargo)
+)
+ 
